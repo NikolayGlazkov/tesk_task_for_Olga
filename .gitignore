@@ -6,7 +6,6 @@ __pycache__/
 venv/
 .env
 .venv
-.venv_test
 
 # Файлы дистрибутивов и артефакты упаковки
 dist/

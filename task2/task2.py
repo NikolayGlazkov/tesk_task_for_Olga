@@ -27,7 +27,7 @@ def read_points_data(filename):
 
 def point_position_relative_to_circle(cx, cy, r, px, py):
     # Вычисляем расстояние от точки до центра окружности
-    distance = math.sqrt((px - cx) ** 2 + (py - cy) ** 2)
+    distance = math.sqrt(pow((px - cx),2) + pow((py - cy),2))
     
     # Сравниваем расстояние с радиусом окружности
     if math.isclose(distance, r):
@@ -37,15 +37,11 @@ def point_position_relative_to_circle(cx, cy, r, px, py):
     else:
         return 2  # Точка снаружи окружности
 
-# # # Пример использования
-# cx = 1.0
-# cy = 1.0
-# r = 5.0
 
 
 cx, cy, r = read_circle_data("file1.txt") # передача аргументов в переменные из функции
 
-# print(point_position_relative_to_circle(cx, cy, r, px, py)) # формула решения
+
 for i in read_points_data("file2.txt"):
             int1, int2 = i 
             print(point_position_relative_to_circle(cx, cy, r, int1, int2))

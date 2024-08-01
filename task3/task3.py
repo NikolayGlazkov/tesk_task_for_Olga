@@ -51,8 +51,8 @@ def find_by_id(data, target_id):
 
 
 my_dict = {}
-file_value = input(f"get my file name of values.json ")
-file_test = input(f"get my file name of tests.json ")
+file_value = input(f"get me file name of values.json ")
+file_test = input(f"get me file name of tests.json ")
 for i in extract_ids(get_json_values_data(file_value)):
     result = find_by_id(get_json_values_data(file_test), i)
    
@@ -60,5 +60,5 @@ for i in extract_ids(get_json_values_data(file_value)):
 
 
 formatted_data = convert_to_json_format(my_dict)
-output_filename = input(f"get my file name of 'output.json' ")
+output_filename = input(f"get me file name of 'output.json' ")
 write_json_file(output_filename, formatted_data)

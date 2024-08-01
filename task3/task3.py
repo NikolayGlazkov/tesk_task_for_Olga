@@ -8,12 +8,16 @@
 Структура report.json такая же, как у tests.json, только заполнены поля “value”."""
 
 import json
-from collections import OrderedDict
 
-def merge_to_json(filename1,filename2):
-    pass
+def convert_to_json_format(data):
+    values_list = [{"id": key, "value": value} for key, value in data.items()]
+    return {"values": values_list}
 
-# функция для данных из value
+def write_json_file(filename, data):
+    with open(filename, 'w', encoding='utf-8') as json_file:
+        json.dump(data, json_file, ensure_ascii=False, indent=2)
+    print(f"Данные успешно записаны в {filename}")
+
 def get_json_values_data(filename):
     with open(filename, 'r') as file:
         data = file.read()
@@ -35,34 +39,35 @@ def extract_ids(data, key='id'):
 
 # функция для данных из tests
 def find_by_id(data, target_id):
-    # Проверяем, является ли текущий элемент словарем
     if isinstance(data, dict):
-        # Проверяем, есть ли у текущего словаря ключ 'id' и совпадает ли значение с искомым id
         if data.get('id') == target_id:
             return data
-        # Проверяем значения всех ключей текущего словаря
         for key in data:
             result = find_by_id(data[key], target_id)
             if result:
                 return result
-    # Проверяем, является ли текущий элемент списком
+
+
     elif isinstance(data, list):
-        # Проходим по каждому элементу списка
         for item in data:
             result = find_by_id(item, target_id)
             if result:
                 return result
-    # Если текущий элемент ни словарь, ни список, возвращаем None
     return None
 
 
 
-target_id = 5321 # id для теста
-result = find_by_id(get_json_values_data("tests.json"), target_id)
 
 
+my_dict = {}
+file_value = input(f"get my file name of values.json ")
+file_test = input(f"get my file name of tests.json ")
+for i in extract_ids(get_json_values_data(file_value)):
+    result = find_by_id(get_json_values_data(file_test), i)
+   
+    my_dict[i] = result["title"]
 
 
-for i in extract_ids(get_json_values_data('values.json')):
-    result = find_by_id(get_json_values_data("tests.json"), i)
-    print(f"id = {i}, title = {result["title"]}")
+formatted_data = convert_to_json_format(my_dict)
+output_filename = input(f"get my file name of 'output.json' ")
+write_json_file(output_filename, formatted_data)
